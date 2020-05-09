@@ -71,7 +71,7 @@ func sortArrayShell(nums []int) []int {
 	return nums
 }
 
-// 归并排序入口
+// 归并排序 --- start-------
 const InsertSortThreshold = 7
 
 var tempArray []int
@@ -91,7 +91,7 @@ func sortInsert(nums []int, start int, end int) {
 
 }
 
-func sort(nums []int, low int, high int) {
+func sortx(nums []int, low int, high int) {
 	var middle int
 	if high-low <= InsertSortThreshold {
 		sortInsert(nums, low, high)
@@ -99,8 +99,8 @@ func sort(nums []int, low int, high int) {
 	}
 	if low < high {
 		middle = low + (high-low)/2
-		sort(nums, low, middle)
-		sort(nums, middle+1, high)
+		sortx(nums, low, middle)
+		sortx(nums, middle+1, high)
 		mergeSort(nums, low, middle, high)
 	}
 }
@@ -138,9 +138,65 @@ func mergeSort(nums []int, low int, middle int, high int) {
 	}
 }
 
-func sortArray(nums []int) []int {
-	// 归并排序入口
+func sortArrayMerge(nums []int) []int {
+	// 归并排序入口 -> 28ms 6.4M
 	tempArray = make([]int, len(nums))
-	sort(nums, 0, len(nums)-1)
+	sortx(nums, 0, len(nums)-1)
+	return nums
+}
+// 归并排序 --- end -------
+
+
+
+// 快速排序 ----- start -------
+func partition(nums []int, lo int, hi int) int {
+	var pivo int
+	var (
+		i int
+		j int
+		pivoIndex int
+	)
+	i = lo
+	j = hi
+	pivoIndex = lo
+	pivo = nums[pivoIndex]
+	for true {
+		for nums[i] < pivo {
+			i++
+			if i == hi {
+				break
+			}
+		}
+		for nums[j] > pivo {
+			j--
+			if j == lo {
+				break
+			}
+		}
+		if i >= j {
+			break
+		}
+		// swap
+		temp := nums[j]
+		nums[j] = nums[i]
+		nums[i] = temp
+		i ++
+		j --
+	}
+	//tempx := nums[j]
+	//nums[j] = nums[lo]
+	//nums[lo] = tempx
+	return j
+}
+func sortq(nums[]int, lo int, hi int) {
+	if lo >= hi {
+		return
+	}
+	var  pivo  = partition(nums, lo, hi)
+	sortq(nums, lo, pivo)
+	sortq(nums, pivo+1, hi)
+}
+func sortArray(nums []int) []int {
+	sortq(nums, 0, len(nums) - 1)
 	return nums
 }

@@ -196,7 +196,68 @@ func sortq(nums[]int, lo int, hi int) {
 	sortq(nums, lo, pivo)
 	sortq(nums, pivo+1, hi)
 }
-func sortArray(nums []int) []int {
+func sortArrayQuick(nums []int) []int {
 	sortq(nums, 0, len(nums) - 1)
+	return nums
+}
+
+// -------- 堆排序 -----------
+func exch(nums []int, i int, j int) {
+	temp := nums[i]
+	nums[i] = nums[j]
+	nums[j] = temp
+}
+
+func less(nums []int, i int, j int) bool {
+	if nums[i] < nums[j] {
+		return true
+	} else {
+		return false
+	}
+}
+
+
+func sink(nums []int, k int, N int) {
+	/*
+	@params nums 数组
+	@params k 当前位置下标
+	@params N 数组总长度
+	 */
+	for 2*k + 1 <= N {
+		j := 2*k + 1
+		if j + 1 <= N && nums[j] < nums[j+1] {
+			j++
+		}
+		if !(nums[k] < nums[j]) {
+			break
+		}
+		exch(nums, j, k)
+		k = j
+	}
+}
+
+func heapify(nums []int){
+	// 数组 -> 堆有序
+	var lenN int
+	lenN = len(nums)
+	for i := (lenN - 1) / 2; i >= 0; i-- {
+		sink(nums, i, lenN -  1)
+	}
+}
+
+func sortArray(nums []int) []int {
+	// 初始化堆-堆有序
+	var (
+		i int
+		lenN int
+	)
+	lenN = len(nums)
+	heapify(nums)
+
+	for i=lenN - 1; i >= 1; {
+		exch(nums, 0, i)
+		i--
+		sink(nums, 0, i)
+	}
 	return nums
 }

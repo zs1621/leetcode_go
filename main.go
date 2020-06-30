@@ -14,24 +14,13 @@ func main() {
 	var (
 		tokens []byte
 		err    error
-		//x *ChapterSearch.NodeTree
 
 	)
 	// bst
 
-	//var x = &ChapterSearch.NodeTree{nil, 0, nil}
+	var x = &ChapterSearch.NodeTree{nil, 0, nil}
 
-	var  x *ChapterSearch.SequentialSearchST
-	x = &ChapterSearch.SequentialSearchST{nil, 0, nil}
-	x.Head = &ChapterSearch.LNode{"", 0, nil}
-	x.MaxNode = x.Head
 
-	//var x *link.BinarySearchST
-	//x = &link.BinarySearchST{
-	//	Keys: []string{},
-	//	Vals: []int{},
-	//	Size: 0,
-	//}
 	scanner := bufio.NewScanner(os.Stdin)
 	t1 := time.Now()
 	for scanner.Scan() {

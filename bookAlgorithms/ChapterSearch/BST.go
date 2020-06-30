@@ -38,15 +38,6 @@ func (nt *NodeTree) Put(data string) {
 	for nt.Current = nt.Root; nt.Current != nil; {
 		if nt.Current.Key < data {
 			nodeList = append(nodeList, nt.Current)
-			if nt.Current.Left == nil {
-				nt.Current.Left = temp
-				nt.Size++
-				flagAdd = true
-				break
-			}
-			nt.Current = nt.Current.Left
-		} else if nt.Current.Key > data {
-			nodeList = append(nodeList, nt.Current)
 			if nt.Current.Right == nil {
 				nt.Current.Right = temp
 				nt.Size++
@@ -54,6 +45,15 @@ func (nt *NodeTree) Put(data string) {
 				break
 			}
 			nt.Current = nt.Current.Right
+		} else if nt.Current.Key > data {
+			nodeList = append(nodeList, nt.Current)
+			if nt.Current.Left == nil {
+				nt.Current.Left = temp
+				nt.Size++
+				flagAdd = true
+				break
+			}
+			nt.Current = nt.Current.Left
 		} else {
 			nt.Current.Value++
 			break

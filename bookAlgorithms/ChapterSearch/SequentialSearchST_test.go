@@ -45,8 +45,6 @@ func TestSequentialSearchST_Put(t *testing.T) {
 				Size: tt.fields.Size,
 			}
 			ln.putval(tt.args.key, tt.args.val)
-			//assert.Equal(t, ln.Head.Key, tt.args.key)
-			//assert.Equal(t, ln.Head.Val, tt.args.val)
 			assert.Equal(t, ln.Size, tt.want.size)
 			assert.Equal(t, ln.Head.hasNext(), tt.want.hasNext)
 		})

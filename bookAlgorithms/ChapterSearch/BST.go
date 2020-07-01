@@ -66,8 +66,17 @@ func (nt *NodeTree) Put(data string) {
 	}
 }
 
-func (nt *NodeTree) Get(data interface{}) int {
-	return 1
+func (nt *NodeTree) Get(key string) int {
+	for nt.Current != nil {
+		if key > nt.Current.Key {
+			nt.Current = nt.Current.Right
+		} else if key < nt.Current.Key {
+			nt.Current = nt.Current.Left
+		} else {
+			return nt.Current.Value
+		}
+	}
+	return -1
 }
 
 func main() {

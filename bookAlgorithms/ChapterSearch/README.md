@@ -12,8 +12,8 @@
 
 ### 运行时间对比
 
-| | leize1m.txt | tale.txt |
-|----- | ----- | ----- |
+|结构\测试文件 | leize1m.txt | tale.txt |
+| ----- | ----- | ----- |
 | SequentialSearchST | - | 2.559444795s |
 | BinarySearchST | 4m6.318207461s | 239.376313ms |
 | BST | 22.449s | 182.501156ms |

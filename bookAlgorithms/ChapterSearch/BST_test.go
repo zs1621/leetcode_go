@@ -53,6 +53,28 @@ func TestBST(t *testing.T) {
 		assert.Equal(t, x.Root.Value, 1)
 	})
 
+	t.Run("SELECT", func (t *testing.T) {
+		x := &NodeTree{nil, 0, nil}
+		y := x.Select(1)
+		assert.Equal(t, "", y)
+
+		x.Put("d")
+		assert.Equal(t, "d", x.Select(1))
+
+		x.Put("c")
+		assert.Equal(t, "c", x.Select(1))
+
+		x.Put("e")
+		assert.Equal(t, "e", x.Select(3))
+
+		x.Put("b")
+		assert.Equal(t, "b", x.Select(1))
+
+		x.Put("a")
+		assert.Equal(t, "a", x.Select(1))
+
+	})
+
 }
 
 

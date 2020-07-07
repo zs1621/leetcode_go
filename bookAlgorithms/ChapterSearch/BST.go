@@ -1,6 +1,5 @@
 package ChapterSearch
 
-
 type Node struct {
 	Key   string
 	Value int
@@ -108,6 +107,32 @@ func (nt *NodeTree) Select(rank int) string {
 
 
 
-//func (nt *NodeTree) Rank(key string) int {
-//
-//}
+func (nt *NodeTree) Rank(key string) int {
+	if nt.Size == 0 {
+		return -1
+	}
+	var N int
+	N = 0
+	for nt.Current = nt.Root; nt.Current != nil; {
+		if nt.Current.Key > key {
+			nt.Current = nt.Current.Left
+		} else if nt.Current.Key < key {
+			if nt.Current.Right != nil {
+				N = N + nt.Current.N - nt.Current.Right.N
+			} else {
+				N = N + nt.Current.N
+			}
+			nt.Current = nt.Current.Right
+		} else {
+			break
+		}
+	}
+	if nt.Current == nil {
+		return -1
+	}
+	if nt.Current.Left != nil {
+		return N + nt.Current.Left.N
+	} else {
+		return N + 1
+	}
+}

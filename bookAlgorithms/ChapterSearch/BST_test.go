@@ -75,6 +75,29 @@ func TestBST(t *testing.T) {
 
 	})
 
+
+   t.Run("Rank", func(t *testing.T) {
+	   x := &NodeTree{nil, 0, nil}
+	   x.Put("c")
+	   assert.Equal(t, 1, x.Rank("c"))
+
+	   x.Put("d")
+	   assert.Equal(t, 2, x.Rank("d"))
+
+	   x.Put("a")
+	   assert.Equal(t, 1, x.Rank("a"))
+	   assert.Equal(t, 3, x.Rank("d"))
+
+	   x.Put("b")
+	   assert.Equal(t, 2, x.Rank("b"))
+
+	   x.Put("x")
+	   assert.Equal(t, 5 , x.Rank("x"))
+	   assert.Equal(t, -1 , x.Rank("e"))
+
+	   x.Put("e")
+	   assert.Equal(t, 5 , x.Rank("e"))
+   })
 }
 
 

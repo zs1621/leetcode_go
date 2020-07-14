@@ -216,6 +216,27 @@ func (nt *NodeTree) Ceil(key string) string {
 	return lastKey
 }
 
+func Range(n *Node,a []string, lo string, hi string) []string{
+	if n == nil {
+		return a
+	}
+	if n.Key > lo {
+		a = Range(n.Left, a, lo, hi)
+	}
+	if  lo <= n.Key  && n.Key <= hi {
+		a = append(a, n.Key)
+	}
+	if n.Key < hi {
+		a = Range(n.Right, a, lo, hi)
+	}
+	return a
+}
+
+func (nt *NodeTree) Range(lo string, hi string) []string {
+	a := []string{}
+	return Range(nt.Root, a, lo, hi)
+}
+
 func (nt *NodeTree) Delete(key string) {
 	for nt.Current = nt.Root; nt.Current != nil; {
 		if nt.Current.Key > key {

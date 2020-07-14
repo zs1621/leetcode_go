@@ -109,10 +109,22 @@ func TestBST(t *testing.T) {
 		assert.Equal(t, -1, x.Rank("t"))
 		assert.Equal(t, 2, x.Rank("b"))
 	})
-	//
-	//t.Run("Delete", func(t *testing.T) {
-	//
-	//})
+
+	t.Run("Range", func(t *testing.T) {
+		x := &NodeTree{nil, 0, nil}
+		x.Put("y")
+		x.Put("k")
+		x.Put("q")
+		x.Put("s")
+		x.Put("m")
+		x.Put("x")
+		y := x.Range("r", "z")
+		assert.Equal(t, []string{"s", "x",  "y"}, y)
+		x = &NodeTree{nil, 0, nil}
+		y = x.Range("a", "x")
+		assert.Equal(t, []string{}, y)
+	})
+
 	t.Run("Floor-Ceil", func(t *testing.T) {
 		x := &NodeTree{nil, 0, nil}
 		x.Put("y")

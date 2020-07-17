@@ -237,10 +237,76 @@ func (nt *NodeTree) Range(lo string, hi string) []string {
 	return Range(nt.Root, a, lo, hi)
 }
 
+func DeleteMin(n *Node) *Node {
+	if n == nil {
+		return nil
+	}
+	lastNode := n
+	for n.Left != nil {
+		n.N --
+		lastNode = n
+		n = n.Left
+	}
+	if lastNode != nil {
+		lastNode.Left = nil
+		if n.Right != nil {
+			lastNode.Right = n.Right
+		}
+	}
+	return n
+}
+
+
 func (nt *NodeTree) Delete(key string) {
+	nt.Current = nt.Root
+	lastNode := nt.Current
+	lastDirection := ""
 	for nt.Current = nt.Root; nt.Current != nil; {
 		if nt.Current.Key > key {
-
+			lastNode = nt.Current
+			lastDirection = "left"
+			nt.Current.N --
+			nt.Current = nt.Current.Left
+		} else if nt.Current.Key < key{
+			lastNode = nt.Current
+			nt.Current.N --
+			lastDirection = "right"
+			nt.Current = nt.Current.Right
+		} else {
+			// Do delete
+			nextNode := DeleteMin(nt.Current.Right)
+			if nextNode == nil {
+				nextNode = lastNode
+			}
+			if lastDirection == "right" {
+				if nextNode != nil {
+					lastNode.Right = nextNode
+				}
+			} else if lastDirection == "left" {
+				if nextNode != nil {
+					lastNode.Left = nextNode
+				}
+			}
+			if nextNode == nt.Current {
+				nt.Root = nt.Current.Left
+				nextNode.Right = nil
+			} else {
+				if lastDirection == "" {
+					nt.Root = nextNode
+					if nextNode == nt.Current.Right {
+						nextNode.Right = nil
+					} else {
+						nextNode.Right = nt.Current.Right
+					}
+				} else {
+					nextNode.Right = nt.Current.Right
+				}
+			}
+			nextNode.Left = nt.Current.Left
+			if nt.Size > 0 {
+				nt.Size = nt.Size - 1
+			}
+			nt.Current = nil
 		}
 	}
 }

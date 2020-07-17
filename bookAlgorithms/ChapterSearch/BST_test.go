@@ -146,6 +146,52 @@ func TestBST(t *testing.T) {
 		y = x.Ceil("r")
 		assert.Equal(t, "s", y)
 	})
+
+	t.Run("Delete", func(t *testing.T) {
+		x := &NodeTree{nil, 0, nil}
+		x.Put("y")
+		x.Delete("y")
+		assert.Equal(t, 0, x.Size)
+
+		x.Put("y")
+		x.Put("k")
+		x.Delete("y")
+		assert.Equal(t, 1, x.Size)
+		assert.Equal(t, "k", x.Root.Key)
+
+		x = &NodeTree{nil, 0, nil}
+		x.Put("y")
+		x.Put("z")
+		x.Delete("y")
+		assert.Equal(t, 1, x.Size)
+		assert.Equal(t, "z", x.Root.Key)
+
+
+		x = &NodeTree{nil, 0, nil}
+		x.Put("y")
+		x.Put("z")
+		x.Put("x")
+		x.Delete("y")
+		assert.Equal(t, 2, x.Size)
+		assert.Equal(t, "z", x.Root.Key)
+		assert.Equal(t, "x", x.Root.Left.Key)
+		assert.Equal(t, x.Root.Left.Right, x.Root.Right)
+
+
+		x = &NodeTree{nil, 0, nil}
+		x.Put("o")
+		x.Put("s")
+		x.Put("p")
+		x.Put("w")
+		x.Put("t")
+		x.Put("c")
+		assert.Equal(t, 1, x.Root.Right.Right.N)
+		x.Delete("s")
+		assert.Equal(t, 5, x.Size)
+		assert.Equal(t, "t", x.Root.Right.Key)
+		assert.Equal(t, 0, x.Root.Right.Right.N)
+		assert.Equal(t, 4, x.Root.N)
+	})
 }
 
 func BenchmarkNodeTree_Get(b *testing.B) {
